@@ -11,7 +11,7 @@
     "css-validator": "^0.11.0",
     "hint": "^7.1.10",
     "html-validator": "^6.0.1",
-    "is-website-vulnerable": "^1.14.8",
+    "is-website-vulnerable": "^1.14.10",
     "observatory-cli": "^0.7.1"
   },
   "devDependencies": {
