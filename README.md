@@ -1,6 +1,6 @@
-# Personal website
+# Personal site
 
-> This is my personal website at [matejkosiarcik.com](https://matejkosiarcik.com)
+> This is my personal site at [matejkosiarcik.com](https://matejkosiarcik.com)
 
 <!-- toc -->
 
