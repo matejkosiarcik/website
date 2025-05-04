@@ -1,8 +1,6 @@
 name: Dependabot auto-merge
 
-# checkov:skip=CKV2_GHA_1: Ignore permissions
 permissions:
-  pull-requests: write
   contents: write
 
 on: pull_request_target
