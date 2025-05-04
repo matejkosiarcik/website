@@ -1,3 +1,5 @@
+LINTER_RULES_PATH: .config/
+
 DISABLE:
   - COPYPASTE # too many false-positives
   - CSS
@@ -5,8 +7,15 @@ DISABLE:
   - TYPESCRIPT
 
 DISABLE_LINTERS:
+  - ANSIBLE_ANSIBLE_LINT # Unable to disable "syntax-check[unknown-module]" errors, even if collections are available
+  - GO_GOLANGCI_LINT
+  - GO_REVIVE
+  - JSON_NPM_PACKAGE_JSON_LINT
   - PYTHON_BANDIT
+  - PYTHON_MYPY
   - REPOSITORY_DEVSKIM
+  - REPOSITORY_GRYPE
+  - REPOSITORY_KICS
   - REPOSITORY_SEMGREP
   - REPOSITORY_TRIVY
   - RUST_CLIPPY
@@ -14,6 +23,7 @@ DISABLE_LINTERS:
 
 # Override default config files
 DOCKERFILE_HADOLINT_CONFIG_FILE: .hadolint.yaml
+MAKEFILE_CHECKMAKE_CONFIG_FILE: checkmake.ini
 PYTHON_BLACK_CONFIG_FILE: pyproject.toml
 PYTHON_FLAKE8_CONFIG_FILE: setup.cfg
 PYTHON_ISORT_CONFIG_FILE: pyproject.toml
@@ -22,4 +32,4 @@ RUBY_RUBOCOP_CONFIG_FILE: .rubocop.yml
 YAML_YAMLLINT_CONFIG_FILE: .yamllint.yml
 
 # Config
-JSON_V8R_FILTER_REGEX_EXCLUDE: composer.json
+JSON_V8R_FILTER_REGEX_EXCLUDE: (composer.json\|package\.json\|package\-lock\.json)
