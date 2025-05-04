@@ -75,7 +75,7 @@
     "posthtml-transform": "^1.0.10",
     "purgecss": "^5.0.0",
     "rcs-core": "^3.7.1",
-    "rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
     "sass": "^1.55.0",
     "sass-loader": "^13.1.0",
     "sitemap2urllist": "^0.2.1",
