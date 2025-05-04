@@ -7,34 +7,24 @@ on:
 
 jobs:
   build-and-deploy:
-    name: Deploy 🚀
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0 # Full git history is needed for proper modification datetimes for jekyll pages/posts
 
-      - name: Setup nodeJS 🧩
-        uses: actions/setup-node@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4.4.0
         with:
-          node-version: "14"
+          node-version: latest
 
-      - name: Setup ruby 🧩
-        uses: ruby/setup-ruby@v1.237.0
-        with:
-          ruby-version: "2.7"
-
-      - name: Build 🔧
-        run: |
-          cd web
-          make bootstrap build
-
-      - name: Deploy to github pages (branch) 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.4.0
+      - name: Deploy to github pages (branch)
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: pages
-          folder: ./web/public
-          commit-message: "deploy: website go brrr 🚀 [ci skip]"
+          folder: ./web
+          commit-message: "deploy: website [ci skip]"
           single-commit: true

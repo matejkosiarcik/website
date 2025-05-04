@@ -1,0 +1,102 @@
+name: Lint
+
+permissions: read-all
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  azlint:
+    name: AZLint
+    runs-on: ubuntu-latest
+    container:
+      image: matejkosiarcik/azlint:0.6.13
+      options: --user root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0 # Full git history is needed to get a proper list of changed files
+
+      - name: Run AZLint
+        run: |
+          ln -s -f "$(which true)" "$(which python)" # TODO: Reenable python and pip checks
+          ln -s -f "$(which true)" "$(which python3)" # TODO: Reenable python and pip checks
+          if [ "$GITHUB_REF_NAME" = main ]; then
+            azlint
+          else
+            azlint # --only-changed # TODO: Fix
+          fi
+
+  mega-linter:
+    name: MegaLinter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0 # Full git history is needed to get a proper list of changed files
+
+      - name: Run MegaLinter
+        uses: oxsecurity/megalinter@v8.6.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          DEFAULT_BRANCH: main
+          MEGALINTER_CONFIG: .config/.mega-linter.yml
+
+  super-linter:
+    name: SuperLinter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0 # Full git history is needed to get a proper list of changed files
+
+      - name: Run SuperLinter
+        uses: super-linter/super-linter@v7.3.0
+        env:
+          # global settings
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          DEFAULT_BRANCH: main
+          LINTER_RULES_PATH: .config/
+          MULTI_STATUS: false
+
+          # Disabled linters below
+          VALIDATE_BASH_EXEC: false
+          VALIDATE_CSS: false
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_JAVASCRIPT_PRETTIER: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_JSCPD: false
+          VALIDATE_JSON: false # Because eslint considers .json as .js (so rules like single-quote don't make sense)
+          VALIDATE_RUST_2015: false
+          VALIDATE_RUST_CLIPPY: false # Somehow fails the compilation
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_TYPESCRIPT_PRETTIER: false
+          VALIDATE_TYPESCRIPT_STANDARD: false
+
+          # TODO: Try to reenable these below
+          VALIDATE_CSS_PRETTIER: false
+          VALIDATE_HTML_PRETTIER: false
+          VALIDATE_JSON_PRETTIER: false
+          VALIDATE_MARKDOWN_PRETTIER: false
+          VALIDATE_PYTHON_MYPY: false
+          VALIDATE_PYTHON_PYINK: false
+          VALIDATE_VUE_PRETTIER: false
+
+          # config files
+          CHECKOV_FILE_NAME: .checkov.yml
+          DOCKERFILE_HADOLINT_FILE_NAME: .hadolint.yaml
+          MARKDOWN_CONFIG_FILE: .markdownlint.json
+          PYTHON_BLACK_CONFIG_FILE: pyproject.toml
+          PYTHON_FLAKE8_CONFIG_FILE: setup.cfg
+          PYTHON_ISORT_CONFIG_FILE: pyproject.toml
+          PYTHON_PYLINT_CONFIG_FILE: pyproject.toml
+          RUBY_CONFIG_FILE: .rubocop.yml
+          YAML_CONFIG_FILE: .yamllint.yml

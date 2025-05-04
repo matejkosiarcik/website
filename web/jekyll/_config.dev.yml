@@ -1,5 +1,0 @@
-env: development
-incremental: true
-minify_html: false
-future: true # future articles
-show_drafts: true # draft articles
