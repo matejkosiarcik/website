@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    name: Deploy
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: latest
 
-      - name: Deploy to github pages (branch)
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.7.3
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
