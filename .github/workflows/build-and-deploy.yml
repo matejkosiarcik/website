@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   build-and-deploy:
@@ -22,6 +23,7 @@ jobs:
 
       - name: Deploy to github pages (branch)
         uses: JamesIves/github-pages-deploy-action@v4.7.3
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: pages
