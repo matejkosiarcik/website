@@ -1,4 +1,4 @@
-# Personal web-site
+# Personal site
 
 > This is my personal site at [matejkosiarcik.com](https://matejkosiarcik.com)
 
