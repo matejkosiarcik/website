@@ -17,7 +17,7 @@ jobs:
       options: --user root
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0 # Full git history is needed to get a proper list of changed files
 
@@ -36,12 +36,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0 # Full git history is needed to get a proper list of changed files
 
       - name: Run MegaLinter
-        uses: oxsecurity/megalinter@v8.8.0
+        uses: oxsecurity/megalinter@v9.4.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0 # Full git history is needed to get a proper list of changed files
 
