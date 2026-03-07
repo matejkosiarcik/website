@@ -9,6 +9,27 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+        with:
+          fetch-depth: 0 # Full git history is needed to get a proper list of changed files
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends build-essential curl ruby ruby-dev zlib1g zlib1g-dev
+          curl -sL https://deb.nodesource.com/setup_lts.x | bash - && apt-get install --yes --no-install-recommends nodejs
+          npm ci
+          npm ci --prefix web
+
+      - name: Run Lint
+        run: |
+          make lint
+
   azlint:
     name: AZLint
     runs-on: ubuntu-latest
